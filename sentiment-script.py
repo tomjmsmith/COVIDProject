@@ -17,22 +17,22 @@ def get_sentiment(rating_data):
    #Load VADER
    from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
    analyser = SentimentIntensityAnalyzer()
-    rating_data['sent_neg'] = -10
-    rating_data['sent_neu'] = -10
-    rating_data['sent_pos'] = -10
-    rating_data['sent_compound'] = -10
+   rating_data['sent_neg'] = -10
+   rating_data['sent_neu'] = -10
+   rating_data['sent_pos'] = -10
+   rating_data['sent_compound'] = -10
   
-    for i in range(len(rating_data)):
-        #Date and Tweet Columns - add more if needed; just be sure to add to line 41 as well
-        date = rating_data['Date'][i]
-        tweet = rating_data['Tweets'][i]
-         
-        #Sentiment Scores - tweets are converted to strings
-        ss = analyser.polarity_scores(str(tweet))
-        rating_data.iloc[i, 2] = ss['neg']
-        rating_data.iloc[i, 3] = ss['neu']
-        rating_data.iloc[i, 4] = ss['pos']
-        rating_data.iloc[i, 5] = ss['compound']
+   for i in range(len(rating_data)):
+       #Date and Tweet Columns - add more if needed; just be sure to add to line 41 as well
+       date = rating_data['Date'][i]
+       tweet = rating_data['Tweets'][i]
+        
+       #Sentiment Scores - tweets are converted to strings
+       ss = analyser.polarity_scores(str(tweet))
+       rating_data.iloc[i, 2] = ss['neg']
+       rating_data.iloc[i, 3] = ss['neu']
+       rating_data.iloc[i, 4] = ss['pos']
+       rating_data.iloc[i, 5] = ss['compound']
          
     return rating_data
 
