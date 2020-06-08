@@ -17,7 +17,6 @@ def get_sentiment(rating_data):
    #Load VADER
    from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
    analyser = SentimentIntensityAnalyzer()
-   
     rating_data['sent_neg'] = -10
     rating_data['sent_neu'] = -10
     rating_data['sent_pos'] = -10
