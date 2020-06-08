@@ -1,5 +1,4 @@
 from io import open
-#------------------
 import os
 import re
 import math
@@ -13,33 +12,39 @@ import vaderSentiment
 import numpy as np
 import openpyxl
 
-def get_sentiment(rating_data): ###this is the vader medium article###
+def get_sentiment(rating_data): 
    
-    from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-    analyser = SentimentIntensityAnalyzer()
+   #Load VADER
+   from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+   analyser = SentimentIntensityAnalyzer()
+   
     rating_data['sent_neg'] = -10
     rating_data['sent_neu'] = -10
     rating_data['sent_pos'] = -10
     rating_data['sent_compound'] = -10
+  
     for i in range(len(rating_data)):
+        #Date and Tweet Columns - add more if needed; just be sure to add to line 41 as well
         date = rating_data['Date'][i]
-        sentence = rating_data['Sentences'][i]
-        ss = analyser.polarity_scores(str(sentence))
+        tweet = rating_data['Tweets'][i]
+         
+        #Sentiment Scores - tweets are converted to strings
+        ss = analyser.polarity_scores(str(tweet))
         rating_data.iloc[i, 2] = ss['neg']
         rating_data.iloc[i, 3] = ss['neu']
         rating_data.iloc[i, 4] = ss['pos']
         rating_data.iloc[i, 5] = ss['compound']
+         
     return rating_data
 
-###need to add in date column
-
-#Input file. Replace with the output file of the parserforsentiment script. Don't forget run this for each keyword
+#Input File
 rating_data = pd.read_csv("walmartpickup-jan-week-1.csv")
-#print (rating_data)
-rating_data = rating_data.rename(columns={rating_data.columns[0]: "Date", rating_data.columns[1]: "Sentences"})
+#Set Columns - make sure input file has the corresponding columns
+rating_data = rating_data.rename(columns={rating_data.columns[0]: "Date", rating_data.columns[1]: "Tweets"})
 
-
+#Retrieving Sentiment Scores
 sentiment_data = get_sentiment(rating_data)
-#output for sentiment sheet. rename each time.
+
+#Output Scores to Spreadsheet - be sure to rename each time
 sentiment_data.to_excel("SENTIMENT_walmartpickup-jan-week-1.xlsx", index = False)
-print ("Finally done! Don't forget to gather an output for each keyword :)")
+print ("Finished! :)")
