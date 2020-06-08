@@ -34,7 +34,7 @@ def get_sentiment(rating_data):
        rating_data.iloc[i, 4] = ss['pos']
        rating_data.iloc[i, 5] = ss['compound']
          
-    return rating_data
+   return rating_data
 
 #Input File
 rating_data = pd.read_csv("walmartpickup-jan-week-1.csv")
