@@ -40,7 +40,7 @@ def chunk_mapper(chunk):
 
 df =pd.read_csv('af_wf.csv')
 
-data_count = df["text"].value_counts()
+data_count = pd.value_counts(df.values.flatten())
 data_count.to_excel("amazonfresh-test.xlsx") # change this name
 
 # works fine from here
